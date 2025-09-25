@@ -23,7 +23,7 @@ spec:
       - name: multitool
         image: wbitt/network-multitool
         command: ["/bin/sh", "-c"]
-        args: ["while true; do echo '----- multitool read file -----'; cat /exchange/shared.txt || true; sleep 5; done;"]
+        args: ["tail -f /exchange/shared.txt"]
         volumeMounts:
         - name: exchange-vol
           mountPath: /exchange
