@@ -113,32 +113,37 @@ Events:
 Задача
 Создать Deployment приложения, использующего локальный PV, созданный вручную.
 
-Шаги выполнения
-
 1. Создать Deployment приложения, состоящего из контейнеров busybox и multitool, использующего созданный ранее PVC
 
-
+Манифесты: [pv-pvc.yaml](https://github.com/vladmgb/kuber-2.1/blob/main/pv-pvc.yaml)
+   
 2. Создать PV и PVC для подключения папки на локальной ноде, которая будет использована в поде.
+
+<img width="921" height="209" alt="image" src="https://github.com/user-attachments/assets/09a1c1aa-f352-4d5b-935e-b6907725014f" />
 
 
 3. Продемонстрировать, что контейнер multitool может читать данные из файла в смонтированной директории, в который busybox записывает данные каждые 5 секунд.
 
 
+<img width="926" height="103" alt="image" src="https://github.com/user-attachments/assets/3b3d26be-97ba-43d8-a94c-8467192f6678" />
+
 
 4. Удалить Deployment и PVC. Продемонстрировать, что после этого произошло с PV. Пояснить, почему. (Используйте команду kubectl describe pv).
 
+<img width="929" height="104" alt="image" src="https://github.com/user-attachments/assets/48452a00-04fd-46ac-99ec-575771010124" />
+
+
+<img width="528" height="271" alt="image" src="https://github.com/user-attachments/assets/0d6b1b29-2fc3-4ac2-b7c6-fff941a3ed3b" />
+
+Статус PV стал Released. 
+PVC удалён, поэтому PV больше не используется, но так как политика persistentVolumeReclaimPolicy: Retain, Kubernetes не очищает данные и не удаляет сам том. Он остаётся пока админ вручную не перепривяжет или не удалит его.
 
 
 5. Продемонстрировать, что файл сохранился на локальном диске ноды. Удалить PV. Продемонстрировать, что произошло с файлом после удаления PV. Пояснить, почему.
 
+<img width="398" height="194" alt="image" src="https://github.com/user-attachments/assets/19cab647-0804-41c7-a890-527894bdd17e" />
 
-Что сдать на проверку
-
-Манифесты:
-pv-pvc.yaml
-Скриншоты:
-каждый шаг выполнения задания, начиная с шага 2.
-
+После удаления PV том в Kubernetes исчез, но файл на диске остался, потому что локальный PV — это всего лишь "ссылка" на директорию на ноде. Kubernetes не управляет содержимым папки и не удаляет его при удалении PV. 
 
 ## Задание 3. StorageClass
 Задача
