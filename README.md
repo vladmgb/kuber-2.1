@@ -153,7 +153,7 @@ PVC удалён, поэтому PV больше не используется, 
 
 1. Создать Deployment приложения, состоящего из контейнеров busybox и multitool, использующего созданный ранее PVC.
 
-Манифесты:[sc.yaml(https://github.com/vladmgb/kuber-2.1/blob/main/sc.yaml)
+Манифесты:[sc.yaml](https://github.com/vladmgb/kuber-2.1/blob/main/sc.yaml)
 
 2. Создать SC и PVC для подключения папки на локальной ноде, которая будет использована в поде.
 
