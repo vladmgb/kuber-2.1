@@ -1,0 +1,61 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: my-pv
+spec:
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: /var/data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc
+spec:
+  volumeName: my-pv
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: data-exchange-pvc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: busybox
+        image: busybox
+        command: ["/bin/sh", "-c"] 
+        args: ["while true; do date >> /exchange/shared.txt; sleep 5; done;"]
+        volumeMounts:
+        - name: vol
+          mountPath: /exchange
+      - name: multitool
+        image: wbitt/network-multitool
+        command: ["/bin/sh", "-c"]
+        args: ["tail -f /exchange/shared.txt"]
+        volumeMounts:
+        - name: vol
+          mountPath: /exchange
+      volumes:
+      - name: vol
+        persistentVolumeClaim:
+          claimName: my-pvc
