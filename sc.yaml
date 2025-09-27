@@ -51,3 +51,25 @@ spec:
       - name: vol
         persistentVolumeClaim:
           claimName: my-pvc
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: my-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: my-sc
+  persistentVolumeReclaimPolicy: Retain
+  local:
+    path: /var/data
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - my-k8s
