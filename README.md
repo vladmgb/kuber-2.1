@@ -153,20 +153,18 @@ PVC удалён, поэтому PV больше не используется, 
 
 1. Создать Deployment приложения, состоящего из контейнеров busybox и multitool, использующего созданный ранее PVC.
 
-
+Манифесты:[sc.yaml(https://github.com/vladmgb/kuber-2.1/blob/main/sc.yaml)
 
 2. Создать SC и PVC для подключения папки на локальной ноде, которая будет использована в поде.
 
+<img width="804" height="238" alt="image" src="https://github.com/user-attachments/assets/59daf59e-5da2-48ba-a152-4affcad8fed5" />
+
+SC не создается автоматически, создадим PV.
+
+<img width="916" height="115" alt="image" src="https://github.com/user-attachments/assets/c9cb5f45-7b03-407d-a63e-76976ba32bce" />
 
 
 3. Продемонстрировать, что контейнер multitool может читать данные из файла в смонтированной директории, в который busybox записывает данные каждые 5 секунд.
 
+<img width="804" height="157" alt="image" src="https://github.com/user-attachments/assets/80f7444f-bc5a-48b0-a6a6-88d25efeeaeb" />
 
-Что сдать на проверку
-
-Манифесты:
-sc.yaml
-Скриншоты:
-каждый шаг выполнения задания, начиная с шага 2
-Описания:
-объяснение наблюдаемого поведения ресурсов в двух последних шагах.
